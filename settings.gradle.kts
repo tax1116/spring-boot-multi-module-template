@@ -3,6 +3,5 @@ plugins {
 }
 
 include(
-    "circuitbreaker-example",
-    "chaos-monkey-example"
+    // TODO: Add the names of the projects to include
 )
