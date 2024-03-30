@@ -4,7 +4,6 @@ plugins {
 // TODO: Change the root project name
 rootProject.name = "spring-boot-multi-module-template"
 
-include(
-    "demo", // TODO: Change the name of the project
-    // TODO: Add the names of the projects to include
-)
+// TODO: Change the name of the project
+// TODO: Add the names of the projects to include
+include("demo")
