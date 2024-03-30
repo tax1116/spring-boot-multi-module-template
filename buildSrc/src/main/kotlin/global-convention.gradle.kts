@@ -1,3 +1,5 @@
+import kr.co.taek.dev.build.JDK_VERSION
+import kr.co.taek.dev.build.libs
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.api.Project
@@ -12,7 +14,7 @@ group = "kr.co.taek.dev"
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of("21"))
+        languageVersion.set(JavaLanguageVersion.of(JDK_VERSION))
     }
 }
 
@@ -26,12 +28,11 @@ repositories {
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "21"
+        jvmTarget = JDK_VERSION
     }
 }
 
 tasks.withType<Test> {
-//    jvmArgs = listOf("--add-opens", "java.base/java.lang.invoke=ALL-UNNAMED")
     useJUnitPlatform()
 }
 
@@ -49,5 +50,3 @@ ktlint {
         }
     }
 }
-
-inline val Project.libs: LibrariesForLibs get() = the<LibrariesForLibs>()
