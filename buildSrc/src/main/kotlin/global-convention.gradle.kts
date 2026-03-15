@@ -1,9 +1,5 @@
 import kr.co.taek.dev.build.JDK_VERSION
 import kr.co.taek.dev.build.libs
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.gradle.accessors.dm.LibrariesForLibs
-import org.gradle.api.Project
-import org.gradle.kotlin.dsl.the
 
 plugins {
     kotlin("jvm")
@@ -25,10 +21,9 @@ repositories {
     }
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = JDK_VERSION
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xjsr305=strict")
     }
 }
 
@@ -38,12 +33,10 @@ tasks.withType<Test> {
 
 dependencies {
     implementation(libs.kotlin.logging)
-    testImplementation(libs.kotest.assertions.core)
-    testImplementation(libs.kotest.runner.junit5)
+    testImplementation(libs.spring.boot.starter.test)
 }
 
 ktlint {
-    version.set("1.2.1")
     filter {
         exclude {
             it.file.path.startsWith(project.layout.buildDirectory.get().dir("generated").toString())
