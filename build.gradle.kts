@@ -1,5 +1,5 @@
 plugins {
-    id("org.jlleitschuh.gradle.ktlint")
+    id("lint-convention")
 }
 
 repositories {

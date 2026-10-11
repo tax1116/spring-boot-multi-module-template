@@ -1,9 +1,9 @@
 import kr.co.taek.dev.build.JDK_VERSION
-import kr.co.taek.dev.build.libs
+import org.gradle.api.artifacts.VersionCatalogsExtension
 
 plugins {
     kotlin("jvm")
-    id("org.jlleitschuh.gradle.ktlint")
+    id("lint-convention")
 }
 
 group = "kr.co.taek.dev"
@@ -27,13 +27,15 @@ kotlin {
     }
 }
 
-tasks.withType<Test> {
+tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
 
+val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+
 dependencies {
-    implementation(libs.kotlin.logging)
-    testImplementation(libs.spring.boot.starter.test)
+    implementation(libs.findLibrary("kotlin-logging").get())
+    testImplementation(libs.findLibrary("spring-boot-starter-test").get())
 }
 
 ktlint {

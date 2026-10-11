@@ -31,9 +31,9 @@
 
 ## 아키텍처
 
-### 컨벤션 플러그인 시스템 (buildSrc)
+### 컨벤션 플러그인 시스템 (build-logic)
 
-빌드 로직은 개별 모듈의 build 파일이 아닌 `buildSrc/src/main/kotlin/`에 컨벤션 플러그인으로 중앙 집중화되어 있다.
+빌드 로직은 개별 모듈의 build 파일이 아닌 `build-logic/src/main/kotlin/`에 컨벤션 플러그인으로 중앙 집중화되어 있습니다.
 
 | 플러그인 | 설명 |
 |---|---|
@@ -58,3 +58,8 @@ GitHub Actions에서 JDK 21(Amazon Corretto) 환경으로 main/dev push와 PR에
 
 - `org.gradle.caching=true`로 Gradle 빌드 캐시 활성화
 - merge-base 기반 캐싱 전략으로 증분 빌드 최적화
+
+공통 빌드 설정은 별도 included build인 `build-logic`의 convention plugin으로 관리합니다.
+convention plugin에서는 `VersionCatalogsExtension` 공개 API로 적용 대상 프로젝트의 카탈로그에 접근합니다.
+모듈의 저장소는 `global-convention`에서 선언하며, 해당 플러그인이 적용된 모듈에 공통으로 설정됩니다.
+`build-logic` 자체의 의존성 저장소는 `build-logic/settings.gradle.kts`에서 별도로 선언합니다.
