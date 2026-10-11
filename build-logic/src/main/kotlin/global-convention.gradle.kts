@@ -1,13 +1,10 @@
 import kr.co.taek.dev.build.JDK_VERSION
-import kr.co.taek.dev.build.libs
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.gradle.accessors.dm.LibrariesForLibs
-import org.gradle.api.Project
-import org.gradle.kotlin.dsl.the
 
 plugins {
     kotlin("jvm")
-    id("org.jlleitschuh.gradle.ktlint")
+    id("lint-convention")
 }
 
 group = "kr.co.taek.dev"
@@ -18,28 +15,23 @@ java {
     }
 }
 
-repositories {
-    mavenCentral()
-    maven {
-        url = uri("https://packages.confluent.io/maven/")
-    }
-}
-
-tasks.withType<KotlinCompile> {
+tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = JDK_VERSION
     }
 }
 
-tasks.withType<Test> {
+tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
 
+val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+
 dependencies {
-    implementation(libs.kotlin.logging)
-    testImplementation(libs.kotest.assertions.core)
-    testImplementation(libs.kotest.runner.junit5)
+    implementation(libs.findLibrary("kotlin-logging").get())
+    testImplementation(libs.findLibrary("kotest-assertions-core").get())
+    testImplementation(libs.findLibrary("kotest-runner-junit5").get())
 }
 
 ktlint {
