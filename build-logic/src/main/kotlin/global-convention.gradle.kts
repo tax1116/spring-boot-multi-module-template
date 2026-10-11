@@ -1,6 +1,5 @@
 import kr.co.taek.dev.build.JDK_VERSION
 import org.gradle.api.artifacts.VersionCatalogsExtension
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm")
@@ -15,10 +14,9 @@ java {
     }
 }
 
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = JDK_VERSION
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xjsr305=strict")
     }
 }
 
@@ -30,12 +28,10 @@ val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
 dependencies {
     implementation(libs.findLibrary("kotlin-logging").get())
-    testImplementation(libs.findLibrary("kotest-assertions-core").get())
-    testImplementation(libs.findLibrary("kotest-runner-junit5").get())
+    testImplementation(libs.findLibrary("spring-boot-starter-test").get())
 }
 
 ktlint {
-    version.set("1.2.1")
     filter {
         exclude {
             it.file.path.startsWith(project.layout.buildDirectory.get().dir("generated").toString())
