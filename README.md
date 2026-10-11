@@ -37,7 +37,7 @@
 
 | 플러그인 | 설명 |
 |---|---|
-| `global-convention` | 모든 모듈에 적용. Kotlin JVM, ktlint, Java 21 툴체인, kotlin-logging, JUnit 5 |
+| `global-convention` | 모든 모듈에 적용. Kotlin JVM, ktlint, Java 21 툴체인, kotlin-logging, JUnit 5, 저장소 설정 |
 | `spring-boot-convention` | Spring Boot 플러그인, dependency-management 플러그인, Kotlin Spring 플러그인(all-open) 적용. bootJar로 실행 가능한 앱 빌드 |
 | `spring-jar-convention` | Spring Boot BOM을 `platform()`으로 가져오는 라이브러리 모듈용. bootJar 없이 일반 jar로 빌드 |
 
@@ -61,5 +61,5 @@ GitHub Actions에서 JDK 21(Amazon Corretto) 환경으로 main/dev push와 PR에
 
 공통 빌드 설정은 별도 included build인 `build-logic`의 convention plugin으로 관리합니다.
 convention plugin에서는 `VersionCatalogsExtension` 공개 API로 적용 대상 프로젝트의 카탈로그에 접근합니다.
-저장소는 루트와 `build-logic`의 `settings.gradle.kts`에서 각각 선언합니다.
-모듈이나 convention plugin에 저장소를 추가하면 빌드가 실패하므로 설정 파일에 추가하세요.
+모듈의 저장소는 `global-convention`에서 선언하며, 해당 플러그인이 적용된 모듈에 공통으로 설정됩니다.
+`build-logic` 자체의 의존성 저장소는 `build-logic/settings.gradle.kts`에서 별도로 선언합니다.

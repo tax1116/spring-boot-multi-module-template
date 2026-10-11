@@ -11,13 +11,3 @@ rootProject.name = "spring-boot-multi-module-template"
 // TODO: Change the name of the project
 // TODO: Add the names of the projects to include
 include("demo")
-
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        mavenCentral()
-        maven {
-            url = uri("https://packages.confluent.io/maven/")
-        }
-    }
-}

@@ -14,6 +14,13 @@ java {
     }
 }
 
+repositories {
+    mavenCentral()
+    maven {
+        url = uri("https://packages.confluent.io/maven/")
+    }
+}
+
 kotlin {
     compilerOptions {
         freeCompilerArgs.add("-Xjsr305=strict")
